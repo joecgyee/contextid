@@ -1,0 +1,116 @@
+{% extends "./base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center mb-5">
+        <div class="col-lg-8 text-center">
+            <h1 class="display-4 fw-bold mb-4 animate__animated animate__slideInRight">The Philosophy of <span class="text-gradient">ContextID</span></h1>
+            <p class="lead text-secondary animate__animated animate__slideInLeft">
+                In the physical world, you are a professional at work, a friend at a bar, and a patient at a clinic. 
+                Your identity is <strong>adaptive</strong>. ContextID brings this fluidity to the digital world, 
+                allowing you to resolve the right version of yourself, in the right place, at the right time.
+            </p>
+        </div>
+    </div>
+
+    <div class="row g-4 mb-5 animate__animated animate__slideInUp">
+        <div class="col-md-4">
+            <div class="card h-100 border-0 shadow-sm p-4 text-center">
+                <div class="mb-3 text-primary"><i class="fas fa-layer-group fa-3x"></i></div>
+                <h4 class="fw-bold">Multi-Faceted</h4>
+                <p class="text-muted small">One account, infinite profiles. Segregate your data by context to maintain true privacy.</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card h-100 border-0 shadow-sm p-4 text-center">
+                <div class="mb-3 text-success"><i class="fas fa-microchip fa-3x"></i></div>
+                <h4 class="fw-bold">Resolution Engine</h4>
+                <p class="text-muted small">A powerful API-first approach to resolving identity attributes based on specific request contexts.</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card h-100 border-0 shadow-sm p-4 text-center">
+                <div class="mb-3 text-info"><i class="fas fa-shield-alt fa-3x"></i></div>
+                <h4 class="fw-bold">Modern Security</h4>
+                <p class="text-muted small">Built on the latest Django 6.0 and JWT standards to ensure your data resolution is secure.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="col-lg-10">
+            <div class="card border-0 shadow-lg overflow-hidden">
+                <div class="card-header bg-dark text-white p-4">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0"><i class="fas fa-terminal me-2"></i> System Manifest</h5>
+                        <span class="badge bg-primary">v1.0-Stable</span>
+                    </div>
+                </div>
+                <div class="card-body bg-light p-0">
+                    <div class="row g-0">
+                        <div class="col-md-4 p-4 border-end">
+                            <h6 class="fw-bold text-uppercase small text-muted mb-3">Core Stack</h6>
+                            <ul class="list-unstyled">
+                                <li class="mb-2"><i class="fab fa-python text-primary me-2"></i> Python 3.12+</li>
+                                <li class="mb-2"><i class="fab fa-envira text-success me-2"></i> Django 6.0</li>
+                                <li class="mb-2"><i class="fas fa-database text-warning me-2"></i> PostgreSQL</li>
+                                <li class="mb-2"><i class="fas fa-key text-info me-2"></i> SimpleJWT Auth</li>
+                                <li class="mb-2"><i class="fas fa-bolt text-danger me-2"></i> REST Framework</li>
+                            </ul>
+                            <hr>
+                            <p class="extra-small text-muted italic">
+                                ContextID is built for high-performance identity resolution with a focus on atomic data integrity.
+                            </p>
+                        </div>
+                        
+                        <div class="col-md-8 p-4 bg-white">
+                            <h6 class="fw-bold text-uppercase small text-muted mb-3">Dependencies (pip freeze)</h6>
+                            <div class="p-3 rounded" style="background-color: #f8f9fa; border: 1px inset #eee; max-height: 300px; overflow-y: auto;">
+                                <code class="small text-dark" style="white-space: pre-wrap;">
+                                    asgiref==3.11.0
+                                    attrs==25.4.0
+                                    crispy-bootstrap5==2026.3
+                                    distlib==0.4.0
+                                    Django==6.0
+                                    django-bootstrap5==26.1
+                                    django-crispy-forms==2.6
+                                    djangorestframework==3.16.1
+                                    djangorestframework_simplejwt==5.5.1
+                                    drf-spectacular==0.29.0
+                                    filelock==3.20.1
+                                    gunicorn==25.1.0
+                                    inflection==0.5.1
+                                    jsonschema==4.26.0
+                                    jsonschema-specifications==2025.9.1
+                                    packaging==26.0
+                                    pillow==12.1.1
+                                    platformdirs==4.5.1
+                                    psycopg2-binary==2.9.11
+                                    PyJWT==2.11.0
+                                    python-dotenv==1.2.1
+                                    PyYAML==6.0.3
+                                    referencing==0.37.0
+                                    rpds-py==0.30.0
+                                    sqlparse==0.5.4
+                                    stevedore==5.6.0
+                                    tzdata==2025.3
+                                    uritemplate==4.2.0
+                                    virtualenv==20.35.4
+                                    virtualenv-clone==0.5.7
+                                    virtualenvwrapper==6.1.1
+                                    whitenoise==6.12.0
+                                </code>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="text-center mt-5">
+        <a href="{% url 'accounts:dashboard' %}" class="btn btn-primary btn-lg px-5 shadow-sm">Start Your Identity</a>
+    </div>
+</div>
+{% endblock %}

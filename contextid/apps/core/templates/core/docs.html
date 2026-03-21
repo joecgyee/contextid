@@ -1,0 +1,188 @@
+{% extends "./base.html" %}
+
+{% block content %}
+<div class="container-fluid docs-container py-5 px-4 px-md-5">
+    <header class="mb-5 border-bottom pb-4">
+        <h1 class="display-4 fw-bold animate__animated animate__slideInRight"><span class="text-gradient">ContextID</span> Documentation</h1>
+        <p class="lead text-muted animate__animated animate__slideInLeft">A context-aware identity resolution system for interconnected environments.</p>
+    </header>
+
+    <div class="row">
+        <div class="col-md-3 d-none d-md-block">
+            <nav class="sticky-top pt-3" style="top: 100px; height: calc(100vh - 120px); overflow-y: auto;">
+                <h5 class="text-uppercase small fw-bold" style="color: #2D336B;">Getting Started</h5>
+                <ul class="list-unstyled mb-4">
+                    <li><a href="#registration" class="docs-nav-link">Create Account</a></li>
+                </ul>
+
+                <h5 class="text-uppercase small fw-bold" style="color: #2D336B;">User Guide</h5>
+                <ul class="list-unstyled mb-4">
+                    <li><a href="#profile" class="docs-nav-link">Profile</a></li>
+                    <li><a href="#context" class="docs-nav-link">Context</a></li>
+                    <li><a href="#workflow" class="docs-nav-link">System Workflow</a></li>
+                </ul>
+
+                <h5 class="text-uppercase small fw-bold" style="color: #2D336B;">Developer Guide</h5>
+                <ul class="list-unstyled mb-4">
+                    <li><a href="#api-reference" class="docs-nav-link">API Reference</a></li>
+                    <li><a href="#api-auth" class="docs-nav-link">Authentication & Authorization</a></li>
+                </ul>
+
+                <h5 class="text-uppercase small fw-bold" style="color: #2D336B;">Administration</h5>
+                <ul class="list-unstyled mb-4">
+                    <li><a href="#admin-portal" class="docs-nav-link">Administrative Control</a></li>
+                </ul>
+
+                <h5 class="text-uppercase small fw-bold" style="color: #2D336B;">Getting Help</h5>
+                <ul class="list-unstyled">
+                    <li><a href="#FAQs" class="docs-nav-link">FAQs</a></li>
+                </ul>
+            </nav>
+        </div>
+
+        <div class="col-md-9 px-md-5 docs-content">
+            
+            <section id="registration" class="mb-5">
+                <h1 class="mb-5">Getting Started</h1>
+                <h2 class="h3 mb-3">Create Account</h2>
+                <p>To begin using ContextID, you must first establish your primary user account. This account acts as the "Owner" of all your contextual profiles.</p>
+                <div class="d-flex gap-3">
+                    <a href="/accounts/register/" class="btn btn-primary px-4">Register Now</a>
+                    <a href="/accounts/login/" class="btn btn-outline-primary px-4">User Login</a>
+                </div>
+            </section>
+
+            <hr class="my-5">
+
+            <section id="profile" class="mb-5">
+                <h1 class="mb-5">User Guide</h1>
+                <h2 class="h3 mb-3">Profile</h2>
+                <div class="card border-0 shadow-sm hover-lift bg-white p-4">
+                    <p>Your identity is not a single entity. It is a collection of <strong>Profiles</strong> tailored to specific environments.</p>
+                    <ul class="mb-3">
+                        <li><strong>Dashboard:</strong> Visit your <a href="/accounts/dashboard/">Dashboard</a> to view, create, and manage your identities.</li>
+                        <li><strong>One Per Context:</strong> You can create exactly <strong>one</strong> profile for each available context (e.g., one Legal profile, one Social profile).</li>
+                        <li><strong>Privacy Control:</strong> You can set your profile visibility to <strong>Public</strong>, allowing anyone to view it. Otherwise only you and admins will have access.</li>                        <li><strong>Dynamic Attributes:</strong> Enhance your profile with custom fields like <em>Gender, Date of Birth, or Contact Number</em>.</li>
+                    </ul>
+                    <div class="bg-light p-3 rounded">
+                        <small class="fw-bold text-muted text-uppercase">Supported Attribute Types:</small>
+                        <div class="d-flex flex-wrap gap-2 mt-2">
+                            <span class="badge bg-secondary">STRING</span>
+                            <span class="badge bg-secondary">INT</span>
+                            <span class="badge bg-secondary">BOOL</span>
+                            <span class="badge bg-secondary">DATE</span>
+                            <span class="badge bg-secondary">URL</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="context" class="mb-5">
+                <h2 class="h3 mb-3">Context</h2>
+                <p>Contexts define the "where" and "why" of an identity. Common interaction layers include:</p>
+                <div class="row g-3">
+                    <div class="col-md-4"><div class="p-3 border rounded text-center bg-white shadow-sm"><strong>LEGAL</strong></div></div>
+                    <div class="col-md-4"><div class="p-3 border rounded text-center bg-white shadow-sm"><strong>PROFESSIONAL</strong></div></div>
+                    <div class="col-md-4"><div class="p-3 border rounded text-center bg-white shadow-sm"><strong>SOCIAL</strong></div></div>
+                </div>
+                <p class="mt-3 small text-muted"><em>Note: Only administrators can define new contexts. <a href="/api/v1/contexts/" target="_blank">All available contexts</a></em></p>
+            </section>
+
+            <section id="workflow" class="mb-5">
+                <h2 class="h3 mb-3">System Workflow</h2>
+                <div class="card border-0 bg-light p-4">
+                    <ol class="mb-0">
+                        <li class="mb-3"><strong>Account Setup:</strong> Register and Login to the platform.</li>
+                        <li class="mb-3"><strong>Profile Management:</strong> Navigate to the Dashboard to build your profiles. Select which ones are <strong>Public</strong> (visible to anyone) or <strong>Private</strong> (visible only to you and admins).</li>
+                        <li class="mb-3"><strong>Preview:</strong> View your profile to see how it will be presented to others in that specific context.</li>
+                        <li class="mb-3"><strong>Sharing:</strong> Click the save button under your profile to save and share your contextual identity.</li>
+                        <li><strong>Identity Resolution:</strong> Other users or developers can find your public profiles using:
+                            <code class="d-block mt-2 p-2 bg-dark text-info rounded">/api/v1/identity/?user={username}&context={context}</code>
+                        </li>
+                    </ol>
+                </div>
+            </section>
+
+            <hr class="my-5">
+
+            <section id="api-reference" class="mb-5">
+                <h1 class="mb-5">Developer Guide</h1>
+                <h2 class="h3 mb-3">API Reference</h2>
+                <p>Access our interactive documentation to test endpoints directly from your browser.</p>
+                <div class="d-flex gap-3">
+                    <a href="{% url 'api:v1:swagger-ui' %}" target="_blank" class="btn btn-dark btn-sm px-3">Swagger UI</a>
+                    <a href="{% url 'api:v1:redoc' %}" target="_blank" class="btn btn-outline-dark btn-sm px-3">ReDoc</a>
+                </div>
+            </section>
+
+            <section id="api-auth" class="mb-5">
+                <h2 class="h3 mb-3">Authentication & Authorization</h2>
+                <p>All API requests must include a valid <strong>JSON Web Token (JWT)</strong>. Tokens expire after a set period for security.</p>
+                <div class="bg-dark text-white p-3 rounded mb-3 shadow-sm">
+                    <code class="text-info"># Request Header</code><br>
+                    <code class="text-light">Authorization: Bearer YOUR_ACCESS_TOKEN</code>
+                </div>
+                <p class="small text-muted">Obtain your token via <code>POST /api/v1/accounts/login/</code>.</p>
+            </section>
+
+            <hr class="my-5">
+
+            <section id="admin-portal" class="mb-5">
+                <h1 class="mb-5">Administration</h1>
+                <h2 class="h3 mb-3">Administrative Control</h2>
+                <div class="alert alert-warning border-0 shadow-sm p-4">
+                    <h5 class="alert-heading fw-bold">Staff Access Only</h5>
+                    <p>Administrative accounts have the authority to create new Interaction Contexts, manage system-wide attributes, and moderate user-generated content.</p>
+                    <a href="/admin" class="btn btn-dark btn-sm">Enter Admin Site</a>
+                </div>
+            </section>
+
+            <hr class="my-5">
+
+            <section id="FAQs" class="mb-5">
+                <h1 class="mb-5">Getting Help</h1>
+                <h2 class="h3 mb-4">FAQs</h2>
+                <div class="accordion border-0 shadow-sm" id="faqAccordion">
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq1">
+                                Can I have two profiles in the same context?
+                            </button>
+                        </h2>
+                        <div id="faq1" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body text-muted">
+                                No. Each user is allowed only one unique profile per context to maintain a consistent identity resolution.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq2">
+                                Who can see my profiles?
+                            </button>
+                        </h2>
+                        <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body text-muted">
+                                If your profile is set to "Public," anyone with your username and the context name can see them. If "Public" checkbox is not checked, only you and the system administrators can view them.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq3">
+                                How do I add a new context (e.g., "Work")?
+                            </button>
+                        </h2>
+                        <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body text-muted">
+                                New contexts must be defined at the system level. Please contact the development team to request a new context definition.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,104 @@
+{% extends "./base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="container py-5">
+    
+    <!-- <div class="row justify-content-center">
+        <div class="col-md-8">
+            {% if messages %}
+                {% for message in messages %}
+                <div class="alert alert-{{ message.tags }} alert-dismissible fade show shadow-sm" role="alert">
+                    <i class="fa-solid fa-circle-info me-2"></i> {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+                {% endfor %}
+            {% endif %}
+        </div>
+    </div> -->
+
+    <div class="row align-items-center g-5 py-5">
+        <div class="col-lg-6 text-center text-lg-start">
+            <h1 class="display-4 fw-bold lh-1 mb-3">
+                <div class="animate animation-left-right" style="font-size: 2em;">
+                    <span>C</span>
+                    <span>o</span>
+                    <span>n</span>
+                    <span>t</span>
+                    <span>e</span>
+                    <span>x</span>
+                    <span>t</span>
+                    <span>I</span>
+                    <span>D</span>
+                </div> 
+                <div class="animate__animated animate__slideInRight">
+                    is <span id="typed-text" class="text-gradient"></span>
+                </div>
+            </h1>
+            <p class="lead text-secondary animate__animated animate__slideInLeft">
+                Manage complex, multi‑faceted personal identities across different contexts 
+                in a digital‑first world. Keep your identity <strong>adaptive, secure, and simple.</strong>
+            </p>
+            
+            <div class="d-grid gap-2 d-md-flex justify-content-md-start mt-4">
+                {% if user.is_authenticated %}
+                    <a href="{% url 'accounts:dashboard' %}" class="btn btn-primary btn-lg px-4 me-md-2 shadow animate__animated animate__fadeInDown">Go to Dashboard</a>
+                {% else %}
+                    <a href="{% url 'accounts:login' %}" class="btn btn-primary btn-lg px-4 me-md-2 shadow animate__animated animate__fadeInDown">Get Started</a>
+                {% endif %}
+                
+                <a href="/about/" class="btn btn-outline-secondary btn-lg px-4 animate__animated animate__fadeInDown">Learn More</a>
+            </div>
+        </div>
+        <div class="col-10 col-sm-8 col-lg-6 mx-auto">
+            <div class="hero-image-container">
+                <img src="{% static 'images/logo/logo.png' %}" class="d-block mx-lg-auto img-fluid animate__animated animate__jello" alt="ContextID Logo" width="300" loading="lazy">
+            </div>
+        </div>
+    </div>
+
+    <hr class="my-5 opacity-25">
+
+    <div class="row g-4 py-5 row-cols-1 row-cols-lg-3">
+
+        <div class="col d-flex align-items-start animate__animated animate__slideInRight">
+            <div class="icon-square bg-light text-dark flex-shrink-0 me-3 custom-shadow">
+                <i class="fa-solid fa-book-open fs-4"></i>
+            </div>
+            <div>
+                <h2>Documentation</h2>
+                <p>Curious about how ContextID handles your data or how to set up multiple profiles? Our guide covers everything you need to know.</p>
+                <a href="/docs/" class="btn btn-outline-dark btn-sm rounded-pill">
+                    Read Docs<i class="fa-solid fa-arrow-right ms-1"></i>
+                </a>
+            </div>
+        </div>
+        
+        <div class="col d-flex align-items-start animate__animated animate__flipInX">
+            <div class="icon-square bg-light text-dark flex-shrink-0 me-3 custom-shadow">
+                <i class="fa-solid fa-shield-halved fs-4"></i>
+            </div>
+            <div>
+                <h2>Secure Identity</h2>
+                <p>Your privacy is our priority. ContextID uses modern security standards to ensure your different "selves" stay separate.</p>
+            </div>
+        </div>
+
+        <div class="col d-flex align-items-start animate__animated animate__slideInLeft">
+            <div class="icon-square bg-light text-dark flex-shrink-0 me-3 custom-shadow">
+                <i class="fa-solid fa-circle-info fs-4"></i>
+            </div>
+            <div>
+                <h2>Our Mission</h2>
+                <p>Learn more about the philosophy behind ContextID and the technical stack powering our identity resolution engine.</p>
+                <a href="/about/" class="btn btn-link p-0 text-decoration-none fw-bold">
+                    View Project Manifest <i class="fa-solid fa-chevron-right small"></i>
+                </a>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script src="{% static 'js/text_animation.js' %}"></script>
+{% endblock %}

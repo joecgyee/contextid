@@ -1,0 +1,120 @@
+{% extends "core/base.html" %}
+
+{% block content %}
+<div class="container py-5" id="main_content">
+    <div class="row mb-3 align-items-center">
+        <div class="col-md-8">
+            <h2 class="display-6 fw-bold animate__animated animate__slideInRight">
+                Welcome,
+                <span class="text-gradient">
+                    {{ user.first_name|default:user.username }}
+                </span>.
+            </h2>
+            <p class="lead text-muted animate__animated animate__slideInLeft">Manage your adaptive identities and context-specific profiles.</p>
+        </div>
+        <div class="col-md-4 text-md-end">
+            <a href="{% url 'accounts:logout' %}" class="btn btn-sm btn-danger px-4 rounded-pill shadow-sm">
+                Log out
+            </a>
+        </div>
+    </div>
+
+    <hr class="mb-5">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h3 class="fw-bold d-flex align-items-center my-2 section-heading">
+            <span class="heading-accent"></span>
+            Your <span class="text-gradient ms-2">ContextIDs</span>
+        </h3>        
+        <a href="{% url 'profiles:profile_create' %}" class="btn btn-outline-primary rounded-pill px-4">
+            <i class="fas fa-plus-circle me-2"></i>New Profile
+        </a>
+    </div>
+
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 g-4">
+        {% for profile in user.identity_profiles.all %}
+            <div class="col">
+                <div class="card h-100 border-0 shadow-sm hover-lift transition-all" style="background-color: #fff; border-radius: 12px; overflow: hidden;">
+                    <div class="position-relative">
+                        <span class="badge position-absolute top-0 start-0 m-3 px-3 py-2 bg-light bg-opacity-75 text-black backdrop-blur rounded-pill shadow-sm" style="z-index: 2;">
+                            {{ profile.context.name }}
+                        </span>
+                        <a href="{% url 'profiles:profile_detail' profile.pk %}">
+                            <img src="{{ profile.get_profile_pic_url }}" 
+                                class="profile-card-img card-img-top" 
+                                alt="{{ profile.display_name }}">
+                        </a>
+                    </div>
+                    
+                    <div class="card-body p-4">
+                        <a href="{% url 'profiles:profile_detail' profile.pk %}" style="text-decoration: none;">
+                            <div class="d-flex align-items-center">
+                                <h5 class="card-title fw-bold mb-1" style="color: #5A7ACD; margin: 0;">
+                                    {{ profile.display_name }}
+                                </h5>
+                                {% if profile.is_public %}
+                                    <span class="text-primary ms-auto px-2 py-1" style="font-size: 0.9rem;">
+                                        <i class="fa-solid fa-earth-americas"></i>
+                                    </span>
+                                {% else %}
+                                    <span class="text-secondary ms-auto px-2 py-1" style="font-size: 0.9rem;">
+                                        <i class="fa-solid fa-lock"></i>
+                                    </span>
+                                {% endif %}
+                            </div>
+                        </a>
+                        <p class="text-muted small mb-0">
+                            Updated {{ profile.updated_at|timesince }} ago
+                        </p>
+                    </div>
+                    
+                    <div class="card-footer bg-transparent border-0 p-4 pt-0 d-flex gap-3">
+                        <a href="{% url 'profiles:profile_detail' profile.pk %}" class="btn btn-sm btn-outline-primary flex-grow-1 border-1">
+                            View
+                        </a>
+                        <a href="{% url 'profiles:profile_update' profile.pk %}" class="btn btn-sm btn-outline-secondary flex-grow-1 border-1">
+                            Edit
+                        </a>
+                    </div>
+                </div>
+            </div>
+        {% empty %}
+            <div class="col-12">
+                <div class="text-center py-5 px-4 rounded-4 border border-dashed bg-white shadow-sm">
+                    <i class="bi bi-person-vcard display-1 opacity-25 mb-4" style="color: #5A7ACD;"></i>
+                    <h4 class="fw-bold">No ContextID Found</h4>
+                    <p class="text-muted mb-4">You haven't created any identity profiles yet.</p>
+                    <a href="{% url 'profiles:profile_create' %}" 
+                            class="btn btn-primary rounded-circle d-inline-flex align-items-center justify-content-center"
+                            style="width:50px; height:50px;">
+                                <span style="font-size:30px;">+</span>
+                    </a>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    
+    <hr class="mt-5">
+
+    <div class="d-flex justify-content-between align-items-center mt-4">
+        <h3 class="fw-bold d-flex align-items-center my-2 section-heading">
+            <span class="heading-accent"></span>
+            Your Community
+        </h3> 
+            <div class="d-flex gap-2">
+                <a class="btn btn-outline-success rounded-pill px-4 disabled" tabindex="-1" aria-disabled="true">
+                    <i class="fas fa-sign-in me-2"></i>Join
+                </a>
+                <a class="btn btn-outline-primary rounded-pill px-4 disabled" tabindex="-1" aria-disabled="true">
+                    <i class="fas fa-plus me-2"></i>Create
+                </a>
+            </div>
+    </div>
+    <p class="text-muted fst-italic mt-2">
+        This feature is not yet available. Please check back soon.
+    </p>
+
+
+</div>
+
+{% endblock %}

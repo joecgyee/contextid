@@ -1,0 +1,116 @@
+{% extends "core/base.html" %} 
+{% load static %}
+
+{% block content %}
+<!-- html2canvas for profile sharing (download image) -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+            
+            <div class="card shadow border-0" id="profileCard">
+                <div class="card-header py-5 text-center position-relative mb-5 gradient-header">
+                    <img src="{{ profile.get_profile_pic_url }}" 
+                    class="profile-avatar border border-4 border-white shadow-sm" 
+                    alt="{{ profile.display_name }}">
+                </div>
+
+                <div class="card-body pt-0 px-4 pb-4 text-center">
+                    <h2 class="fw-bold mb-3">{{ profile.display_name }}</h2>
+                    <span class="badge rounded-pill bg-light text-primary border border-primary mb-2">
+                        <i class="fas fa-tag me-1"></i> {{ profile.context.name }}
+                    </span>
+                    
+                <div class="text-muted small mt-3">
+                    <img src="{% static 'images/logo/logo.png' %}" 
+                        alt="ContextID logo" 
+                        style="height:16px; width:auto; vertical-align:middle; margin-right:3px;">
+                    Created: {{ profile.created_at|date:"M d, Y" }}
+                </div>
+
+                    <hr class="my-4">
+
+                    <div class="text-start">
+                        {% if profile.attributes.all %}
+                            <div class="list-group list-group-flush">
+                                {% for attr in profile.attributes.all %}
+                                    <div class="list-group-item px-0 py-3 d-flex justify-content-between align-items-center border-0 border-bottom">
+                                        <div class="fw-bold text-secondary">{{ attr.key }}</div>
+                                        <div class="text-dark">
+                                            {% if attr.value_type.name == 'BOOLEAN' %}
+                                                {% if attr.value %}
+                                                    <span class="badge bg-success"><i class="fas fa-check"></i> Yes</span>
+                                                {% else %}
+                                                    <span class="badge bg-danger"><i class="fas fa-times"></i> No</span>
+                                                {% endif %}
+                                            {% elif attr.value_type.name == 'URL' %}
+                                                <a href="{{ attr.value }}" target="_blank" class="text-decoration-none">
+                                                    {{ attr.value|truncatechars:30 }} <i class="fas fa-external-link-alt ms-1 small"></i>
+                                                </a>
+                                            {% else %}
+                                                {{ attr.value }}
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            <p class="text-muted italic small text-center my-4">No additional attributes added.</p>
+                        {% endif %}
+                    </div>
+
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-center mt-5" data-html2canvas-ignore>
+                        <a href="{% url 'profiles:profile_update' profile.pk %}" class="btn btn-outline-primary px-4" style="width:120px;">
+                            <i class="fas fa-edit me-1"></i> Edit
+                        </a>
+
+                        <button type="button" 
+                                onclick="downloadCard(this)" 
+                                data-filename="{{ profile.display_name|slugify }}-card"
+                                class="btn btn-outline-secondary px-4" 
+                                style="width:120px;">
+                            <i class="fas fa-save me-1"></i> Save
+                        </button>
+
+                        <a href="{% url 'profiles:profile_delete' profile.pk %}" class="btn btn-outline-danger px-4" style="width:120px;">
+                            <i class="fas fa-trash-alt me-1"></i> Delete
+                        </a>
+                    </div>
+
+                    <!-- Identity Resolution Engine Preview -->
+                    <div class="mt-5 pt-4 border-top text-start" data-html2canvas-ignore>
+                        <h6 class="small fw-bold text-uppercase text-muted mb-3">
+                            <i class="fas fa-microchip me-1 text-primary"></i> Identity Resolution Engine
+                        </h6>
+                        <div class="bg-dark rounded p-3 shadow-sm">
+                            <p class="text-info small mb-2" style="font-family: 'Courier New', Courier, monospace;">
+                                // System resolve request for {{ user.username }}, context: {{ profile.context }}
+                            </p>
+                            <div class="d-flex align-items-center justify-content-between">
+                                <code class="text-light small">GET /api/v1/identity/?user={{ user.username }}&context={{ profile.context.name|lower }}</code>
+                                <a href="/api/v1/identity/?user={{ user.username }}&context={{ profile.context.name|lower }}" target="_blank" class="btn btn-sm btn-outline-info py-0 px-2" style="font-size: 0.7rem;">
+                                    View JSON <i class="fas fa-code ms-1"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <p class="text-muted extra-small mt-2" style="font-size: 0.75rem;">
+                            This endpoint allows authorized third-party services to resolve your <strong>{{ profile.context.name }}</strong> identity programmatically.
+                        </p>
+                    </div>
+
+                </div>
+                
+                <div class="card-footer bg-white py-3 text-center border-0" data-html2canvas-ignore>
+                    <a href="{% url 'accounts:dashboard' %}" class="text-muted text-decoration-none small">
+                        <i class="fas fa-arrow-left"></i> Back to Dashboard
+                    </a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script src="{% static 'js/profile_share.js' %}"></script>
+{% endblock %}

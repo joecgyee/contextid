@@ -28,7 +28,7 @@ SECRET_KEY = os.getenv("SECRET_KEY", "fallback-only-for-local")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv("DEBUG", "False") == "True"
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost',]
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'contextid.onrender.com']
 
 
 # Application definition

@@ -2,46 +2,65 @@
 
 Adaptive Identity made simple.
 
-## Prerequisites
+ContextID is a privacy-focused identity and profile management system. It allows users to create **context-specific identity profiles** (e.g., Legal, Professional, Social) and share them via a controlled REST API.
 
-This project is developed with:
+## Key Features
 
-- **Operating System**: Windows 11  
-- **Python Version**: 3.13.2
-- **Django Version**: 6.0
-- **Package Managers**: pip & virtualenv
-- **Database**: PostgreSQL
+* **Contextual Profiles:** Maintain separate display names, profile pictures, and attributes for different life contexts.
+* **Dynamic Attributes:** Add typed attributes (Strings, Integers, Booleans, Dates, URLs) to profiles without database schema alterations.
+* **Privacy-First Design:** Toggle profiles between Public and Private. Private profiles are strictly protected via JWT.
+* **Seamless UI/UX:** Built with Django templates, Bootstrap 5, and JavaScript for dynamic front-end interactions (dynamic formsets, instant previews).
+* **Developer Friendly API:** Native Django REST Framework (DRF) endpoints for resolving identity programmatically.
 
-## Installation
+## Getting Started 
+
+### Prerequisites
+
+* Python 3.10 or higher
+* Git
+* PostgreSQL
+
+### Local Installation
 
 ```bash
-# Clone the repo
-git clone
+# Clone the repository
+git clone https://github.com/joecgyee/contextid.git
 cd contextid
 
-# Create a virtual environment
+# Set up a virtual environment
 python -m venv env
 source env/bin/activate  # On Windows: env\Scripts\activate
-
-# Install dependencies
-pip install -r requirements.txt
 
 # Go to project root directory
 cd contextid
 
-# Run psql to setup database
-psql -U postgres -f setup_db.sql
+# Install dependencies
+pip install -r requirements.txt
 
+# Run psql to setup database
+psql -U {your_username} -f setup_db.sql
+
+# Environment configuration, create a `.env` file in the root directory
+SECRET_KEY=your-local-secret-key
+DEBUG=True
+
+# Run migrations & Seed data
 python manage.py makemigrations 
 python manage.py migrate 
 
-# Run server
+# Start the local server
 python manage.py runserver
 
-# Run all tests
+# Running tests
 python manage.py test 
 
 # Run tests for a specific app (e.g. profiles)
 python manage.py test apps.profiles
-
 ```
+
+### API Quickstart
+
+1. Obtain a Token 
+`POST /api/v1/login/`
+2. Query identity context resolution
+`GET /api/v1/identity/?user={user.username}&context={context}`

@@ -1,8 +1,8 @@
 # ContextID
 
-Adaptive Identity made simple.
+*Adaptive Identity made simple.*
 
-ContextID is a privacy-focused identity and profile management system. It allows users to create **context-specific identity profiles** (e.g., Legal, Professional, Social) and share them via a controlled REST API.
+**ContextID** is a privacy-focused identity and profile management system. It allows users to create **context-specific identity profiles** (*e.g., Legal, Professional, Social*) and share them via a controlled REST API.
 
 ## Key Features
 
@@ -63,4 +63,4 @@ python manage.py test apps.profiles
 1. Obtain a Token 
 `POST /api/v1/login/`
 2. Query identity context resolution
-`GET /api/v1/identity/?user={user.username}&context={context}`
+`GET /api/v1/identity/?user={user.username}&context={context.name}`

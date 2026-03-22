@@ -86,6 +86,16 @@ class IdentityProfileUpdate(LoginRequiredMixin, SuccessMessageMixin, UpdateView)
     def form_valid(self, form):
         context = self.get_context_data()
         attributes = context['attributes']
+
+        # --- Handle (existing) Profile Picture Removal ---
+        # Check if the hidden 'clear_image' flag was set to 'true' by our JavaScript
+        if self.request.POST.get('clear_image') == 'true':
+            # 1. Delete the physical file from storage (Render/Local)
+            if form.instance.profile_pic:
+                form.instance.profile_pic.delete(save=False)
+            
+            # 2. Set the database field to None
+            form.instance.profile_pic = None
         
         # Save the main profile form
         self.object = form.save()

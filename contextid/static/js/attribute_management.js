@@ -62,12 +62,17 @@ document.addEventListener('DOMContentLoaded', function() {
     // --- 3. Profile Picture Preview Logic ---
     const fileInput = document.querySelector('#id_profile_pic');
     const previewImg = document.querySelector('#profile-pic-preview');
-    const removeBtn = document.querySelector('#remove-pic-btn');
+    const removeSelectionBtn = document.querySelector('#remove-pic-btn'); // For newly picked files
+    const deleteExistingBtn = document.querySelector('#delete-existing-pic'); // For DB files
+    const clearFlag = document.querySelector('#clear-image-flag');
     
-    // Store the initial source (if editing an existing profile)
+    // Store original states
     const originalSrc = previewImg ? previewImg.src : "";
+    const defaultAvatar = previewImg ? previewImg.getAttribute('data-default') : "";
 
     if (fileInput && previewImg) {
+        
+        // A. Handling NEW file selection from computer
         fileInput.addEventListener('change', function(event) {
             const file = event.target.files[0];
             if (file) {
@@ -75,23 +80,48 @@ document.addEventListener('DOMContentLoaded', function() {
                 reader.onload = function(e) {
                     previewImg.src = e.target.result;
                     previewImg.classList.remove('d-none'); 
-                    if (removeBtn) removeBtn.classList.remove('d-none');
+                    
+                    if (removeSelectionBtn) removeSelectionBtn.classList.remove('d-none');
+                    if (deleteExistingBtn) deleteExistingBtn.classList.add('d-none'); // Hide delete while picking new
+                    if (clearFlag) clearFlag.value = "false"; // Reset the deletion flag
                 };
                 reader.readAsDataURL(file);
             }
         });
 
-        if (removeBtn) {
-            removeBtn.addEventListener('click', function() {
+        // B. "Cancel Selection" Button (Undo a fresh file pick)
+        if (removeSelectionBtn) {
+            removeSelectionBtn.addEventListener('click', function() {
                 fileInput.value = ""; 
-                // If there was an original image, go back to it. Otherwise hide.
-                if (originalSrc && !originalSrc.endsWith('#')) {
+                removeSelectionBtn.classList.add('d-none');
+                
+                // Revert to original database image or default
+                if (originalSrc && !originalSrc.includes('default-avatar.png')) {
                     previewImg.src = originalSrc;
+                    if (deleteExistingBtn) deleteExistingBtn.classList.remove('d-none');
                 } else {
-                    previewImg.src = "#";
-                    previewImg.classList.add('d-none');
+                    previewImg.src = defaultAvatar;
                 }
-                removeBtn.classList.add('d-none');
+                
+                if (clearFlag) clearFlag.value = "false";
+            });
+        }
+
+        // C. "Remove Photo" Button (Delete existing from Database)
+        if (deleteExistingBtn) {
+            deleteExistingBtn.addEventListener('click', function() {
+                if (confirm("Are you sure you want to remove your profile picture?")) {
+                    // Update visual to default
+                    previewImg.src = defaultAvatar;
+                    
+                    // Set the hidden flag for Django
+                    if (clearFlag) clearFlag.value = "true";
+                    
+                    // UI Cleanup
+                    deleteExistingBtn.classList.add('d-none');
+                    fileInput.value = ""; // Clear any pending file selection
+                    if (removeSelectionBtn) removeSelectionBtn.classList.add('d-none');
+                }
             });
         }
     }

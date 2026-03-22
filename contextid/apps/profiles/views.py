@@ -90,11 +90,14 @@ class IdentityProfileUpdate(LoginRequiredMixin, SuccessMessageMixin, UpdateView)
         # --- Handle (existing) Profile Picture Removal ---
         # Check if the hidden 'clear_image' flag was set to 'true' by our JavaScript
         if self.request.POST.get('clear_image') == 'true':
-            # 1. Delete the physical file from storage (Render/Local)
+            # Delete the physical file from storage (Render/Local)
             if form.instance.profile_pic:
-                form.instance.profile_pic.delete(save=False)
+                try:
+                    form.instance.profile_pic.delete(save=False)
+                except Exception:
+                    pass
             
-            # 2. Set the database field to None
+            # Set the database field to None
             form.instance.profile_pic = None
         
         # Save the main profile form

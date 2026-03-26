@@ -13,7 +13,7 @@
 * **Developer Friendly API:** Native Django REST Framework (DRF) endpoints for resolving identity programmatically.
 
 ## Live Demo
-Check out the live app [here](https://contextid.onrender.com).
+Check out the live app [here](https://contextid.onrender.com). / demonstration [video](https://youtu.be/nlFe6V6X9f8).
 
 ## Getting Started 
 

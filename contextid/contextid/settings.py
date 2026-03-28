@@ -15,6 +15,7 @@ from dotenv import load_dotenv
 from datetime import timedelta
 import dj_database_url
 import os
+import cloudinary
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -50,6 +51,8 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     'drf_spectacular',
+    'cloudinary_storage',
+    'cloudinary',
 
     # Django built-ins
     'django.contrib.admin',
@@ -100,11 +103,14 @@ CRISPY_TEMPLATE_PACK = "bootstrap5"
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
 
 DATABASES = {
+    # For production:
     'default': dj_database_url.config(
         # This grabs the DATABASE_URL from Render's environment
         default='sqlite:///db.sqlite3', 
         conn_max_age=600
     )
+
+    # For local environment:
     # "default": {
     #     "ENGINE": "django.db.backends.postgresql",
     #     "NAME": os.getenv("DB_NAME"),
@@ -197,7 +203,9 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     BASE_DIR / 'static',
 ]
-STATIC_ROOT = BASE_DIR / 'staticfiles' 
+
+# For production:
+# STATIC_ROOT = BASE_DIR / 'staticfiles' 
 
 # This handles the actual serving of the files once they are collected
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
@@ -205,6 +213,10 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 # Media (User‑uploaded content)
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+# Cloudinary for production to save media
+cloudinary.config(secure=True)
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 

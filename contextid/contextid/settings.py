@@ -106,7 +106,8 @@ DATABASES = {
     # For production:
     'default': dj_database_url.config(
         # This grabs the DATABASE_URL from Render's environment
-        default='sqlite:///db.sqlite3', 
+        # default='sqlite:///db.sqlite3', 
+        default=os.getenv('DATABASE_URL'), 
         conn_max_age=600
     )
 
@@ -205,7 +206,7 @@ STATICFILES_DIRS = [
 ]
 
 # For production:
-# STATIC_ROOT = BASE_DIR / 'staticfiles' 
+STATIC_ROOT = BASE_DIR / 'staticfiles' 
 
 # This handles the actual serving of the files once they are collected
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
